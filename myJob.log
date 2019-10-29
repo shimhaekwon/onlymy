@@ -1,0 +1,24 @@
+# MQ 호출 세팅 - 파일럿 완료
+ - 2019/10/11 부분성공 >> BO공통 샘플의 큐 사용하여 테스트 성공.
+ - 2019/10/21 
+xd.dev.smartpick.exchange-coupon-change-recv  direct	D	 >> queue 추가하여 테스트
+q.ldev.claim.exchange-coupon-change-recv-spp >> 호출 성공 [2019/10/28]
+- MQ 리스너에서 DB 처리 호출 테스트 해볼 것. - fail mq 에 대한 처리도 필요.
+
+# 배치 프로젝트 세팅 - 미착수(2019/10/29)
+ - https://gitlab.lotteon.com/jhjo15/aa-sample-spring-batch
+>> batch-smartpick
+>> 배치 프로젝트에서 DB 처리해볼 것
+
+# TCP 방식 외부 인터페이스 연동 세팅 - 미착수(2019/10/29)
+ - text 문자열 파싱해서 내부 서비스 호출하는 거 까지 해본다.
+
+# SO 프로젝트 세팅 - 완료 후 gitlab에 등재 - ldev 배포 후 화면 미노출 문제 있음 - ldev 배포 완료 확인.
+>> 배송 화면 노출됨 - 명일 확인 요청. [2019/10/29 확인]
+
+# FO 프로젝트 세팅 - ing (2019/10/29 ing)
+ - FO 개발 환경 세팅 - 아직 미완성 >> BO, SO 개발 완료 후 진행한다.
+
+# SO - 세션값 강제 생성 가능 여부 확인 필요
+
+# ETL 매핑정의서 수정 후 등록(31일까지) - 진행예정
