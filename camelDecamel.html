@@ -65,7 +65,8 @@
                     alert("there is no target url!");
                     return ;
                 }
-                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                var textTargetUrl = textUrl + "?crspkStrNo=" + textVal;
+                textTargetUrl = encodeURIComponent(textTargetUrl);
                 alert(textTargetUrl);
 
                 var callPop = window.open(textTargetUrl,"callPop",
