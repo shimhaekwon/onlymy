@@ -65,7 +65,7 @@
                     alert("there is no target url!");
                     return ;
                 }
-                var textTargetUrl = "http://" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
                 alert(textTargetUrl);
 
                 var callPop = window.open(textTargetUrl,"callPop",
