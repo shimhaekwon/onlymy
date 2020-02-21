@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+    <head>
+       <script type="text/JavaScript">
+
+            var regExpToCamel = /^([A-Z])|[\s-_]+(\w)/g;
+            var regExpFromCamel1 = /([a-z\d])([A-Z])/g;
+            var regExpFromCamel2 = /([A-Z]+)([A-Z][a-z\d]+)/g;
+
+            var funcCamelize = function(parStr){
+                parStr = parStr.toLowerCase();
+                return parStr.replace(regExpToCamel, function(match, p1, p2, offset){
+                    if (p2) return p2.toUpperCase();
+                    return p1.toLowerCase();
+                });
+            }
+
+            var funcDeCamelize = function(parStr, parSeparator){
+                parSeparator = typeof parSeparator === 'undefined' ? '_' : parSeparator;
+
+                return parStr
+                    .replace(regExpFromCamel1, '$1' + parSeparator + '$2')
+                    .replace(regExpFromCamel2, '$1' + parSeparator + '$2')
+                    .toLowerCase();
+            }
+
+            var funcChange = function(parFlag){
+                if (parFlag == 3){
+                    document.getElementById('textOrgin').value = '';
+                    document.getElementById('textTarget').value = '';
+                    return;
+                }
+
+                var textOrigin = document.getElementById('textOrgin').value;
+                var txtArr = null;
+                var txtChange = '';
+                var txtOrigin = '';
+                var textTarget = '';
+                
+                if (null == textOrigin || '' == textOrigin){
+                    alert('input text');
+                }else{
+                    txtArr = textOrigin.split('\n');
+                   // for ( var i in txtArr ) {
+                    for ( var i=0; i < txtArr.length; i++ ) {
+                        txtChange = '';
+                        txtOrigin = txtArr[i];
+                        console.log(i+":"+txtOrigin);
+                        if (parFlag == 1){
+                            txtChange = funcCamelize(txtOrigin);
+                        }else if(parFlag == 2){
+                            txtChange = funcDeCamelize(txtOrigin);
+                        }
+                        console.log(txtChange);
+
+                        textTarget = textTarget + txtChange + '\n';
+                    }
+                    document.getElementById('textTarget').value = textTarget;
+                }
+            }
+        </script>
+        <style>
+        .divText {
+            float:left;
+            width:48%;
+            padding:10px;
+        }
+        
+        textarea{
+            width:90%;
+            height:500px;
+        }
+        </style>
+
+    </head>
+
+    <body>
+        <div>
+            <div class="divText" style="background-color: red;">
+                <textarea id="textOrgin">aaa_bbb
+ccc_ddd
+eee_fff</textarea>
+            </div>
+            <div class="divText" style="background-color: blue;">
+                <textarea id="textTarget">aaaBbb
+cccDdd
+eeeFff</textarea>
+            </div>
+            <div class="divText" style="width:96%;background-color: yellow;">
+                <input type="button" onClick="funcChange(1);" value="TO_CAMEL">
+                <input type="button" onClick="funcChange(2);" value="TO_SNAKE">
+                <input type="button" onClick="funcChange(3);" value="RESET_ALL">
+            </div>
+
+        </div>
+
+    </body>
+</html>
+

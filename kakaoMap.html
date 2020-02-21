@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Kakao 지도 위치 확인</title>
+</head>
+<body>
+	<div id="map" style="width:500px;height:400px;"></div>
+	<div>새거:ef958091d511fd3743484ed332c02a05</div>
+	<div>기존:dcc55d89bf71280ca514cc30d7e6dc32</div>
+	<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=ef958091d511fd3743484ed332c02a05"></script>
+	<script>
+		var lngtdVal = 126.98190600;    //parent.getlngtdVal(); // 경도값
+		var lttdVal = 37.56513600;  //parent.getlttdVal(); // 위도값
+		var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+		var mapOptions = {
+				center: new kakao.maps.LatLng(lttdVal, lngtdVal), // 지도의 중심좌표(위도값, 경도값)
+			    level: 3
+		};
+
+		var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도를 생성합니다
+		
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(lttdVal, lngtdVal); 
+		
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition
+		});		
+		
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+		
+	</script>
+</body>
+</html>
