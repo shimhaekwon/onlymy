@@ -56,13 +56,34 @@
                     }
                     document.getElementById('textTarget').value = textTarget;
                 }
+            }            
+
+            var funcCallPop = function(){
+                var textUrl = document.getElementById('textUrl').value;
+                var textVal = document.getElementById('textVal').value;
+                if (null == textUrl || ""==textUrl.trim()){
+                    alert("there is no target url!");
+                    return ;
+                }
+                var textTargetUrl = "http://" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                alert(textTargetUrl);
+
+                var callPop = window.open(textTargetUrl,"callPop",
+                "fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
+                callPop.focus();
             }
         </script>
         <style>
+        .divOuter {
+            float:left;
+            width:100%;
+            margin:5px;
+        }
         .divText {
             float:left;
             width:48%;
-            padding:10px;
+            padding:5px;
+            margin:5px;
         }
         
         textarea{
@@ -74,7 +95,7 @@
     </head>
 
     <body>
-        <div>
+        <div class="divOuter">
             <div class="divText" style="background-color: red;">
                 <textarea id="textOrgin">aaa_bbb
 ccc_ddd
@@ -91,6 +112,20 @@ eeeFff</textarea>
                 <input type="button" onClick="funcChange(3);" value="RESET_ALL">
             </div>
 
+        </div>
+
+        <div style="height: 100px;">&nbsp;</div>
+
+        <div class="divOuter" style="background-color: green;">
+            <div class="divText" style="background-color: pink;">
+                URL : <input id="textUrl" size="100" value="" placeholder="http://google.com/webposmain">  
+            </div>
+            <div class="divText" style="background-color: skyblue;">
+                VAL : <input id="textVal" value="" placeholder="asfsa;dlkj">                
+            </div>
+            <div class="divText" style="width:96%;background-color: yellow;">
+                <input type="button" onClick="funcCallPop();" value="CALL_POP">
+            </div>
         </div>
 
     </body>
