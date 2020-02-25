@@ -78,14 +78,38 @@
 
 
 
-//출처: https://devman.tistory.com/entry/JAVASCRIPT자바스크립트-DOMAIN도메인-정보만-추출-하기 [코딩하는 녀석]
+            //출처: https://devman.tistory.com/entry/JAVASCRIPT자바스크립트-DOMAIN도메인-정보만-추출-하기 [코딩하는 녀석]
                 var textTargetUrl = "https//:" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
                 console.log(textTargetUrl);
                 document.domain = document_domain;
 
-                var callPop = window.open(textTargetUrl,"callPop",
+                var webposPop = window.open(textTargetUrl,"webposPop",
                 "fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
-                callPop.focus();
+                webposPop.focus();
+            }
+
+            var funcCallLink = function(){
+                var textUrl = document.getElementById('textUrl').value;
+                var textVal = document.getElementById('textVal').value;
+                var document_domain = "";
+                if (null == textUrl || ""==textUrl.trim()){
+                    alert("there is no target url!");
+                    return ;
+                }
+
+                var patt = /(http(s)?:\/\/)(([a-zA-Z][-a-zA-Z0-9]*)([.][a-zA-Z][-a-zA-Z0-9]*){0,3}||([0-9]{1,3}([.][0-9]{1,3}){3}))/gi;
+                var pattResult = /[^(http(s)?:\/\/)]\S+(\.[^(\n|\t|\s|\/))]+)+/gi;
+                var sResult = textUrl.replace(patt,"");
+                sResult = textUrl.replace(sResult,"");
+                sResult = (sResult.match(pattResult));
+                document_domain = sResult;
+
+                var textTargetUrl = "https//:" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                console.log(textTargetUrl);
+                document.domain = document_domain;
+
+                var webposWindow = window.open("about:blank");
+                webposWindow.locatioin.href = textTargetUrl;
             }
         </script>
         <style>
