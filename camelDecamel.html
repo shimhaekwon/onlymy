@@ -61,12 +61,27 @@
             var funcCallPop = function(){
                 var textUrl = document.getElementById('textUrl').value;
                 var textVal = document.getElementById('textVal').value;
+                var document_domain = "";
                 if (null == textUrl || ""==textUrl.trim()){
                     alert("there is no target url!");
                     return ;
                 }
-                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
-                alert(textTargetUrl);
+
+                var patt = /(http(s)?:\/\/)(([a-zA-Z][-a-zA-Z0-9]*)([.][a-zA-Z][-a-zA-Z0-9]*){0,3}||([0-9]{1,3}([.][0-9]{1,3}){3}))/gi;
+                var pattResult = /[^(http(s)?:\/\/)]\S+(\.[^(\n|\t|\s|\/))]+)+/gi;
+                var sResult = textUrl.replace(patt,"");
+                sResult = textUrl.replace(sResult,"");
+
+                sResult = (sResult.match(pattResult));
+
+                document_domain = sResult;
+
+
+
+//출처: https://devman.tistory.com/entry/JAVASCRIPT자바스크립트-DOMAIN도메인-정보만-추출-하기 [코딩하는 녀석]
+                var textTargetUrl = "https//:" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                console.log(textTargetUrl);
+                document.domain = document_domain;
 
                 var callPop = window.open(textTargetUrl,"callPop",
                 "fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
@@ -125,6 +140,7 @@ eeeFff</textarea>
             </div>
             <div class="divText" style="width:96%;background-color: yellow;">
                 <input type="button" onClick="funcCallPop();" value="CALL_POP">
+                <input type="button" onClick="funcCallLink();" value="CALL_LINK">
             </div>
         </div>
 
