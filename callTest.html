@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <head>
+       <script type="text/JavaScript">
+
+            var funcCallPop = function(){
+                var textUrl = document.getElementById('textUrl').value;
+                var textVal = document.getElementById('textVal').value;
+                var document_domain = "";
+                if (null == textUrl || ""==textUrl.trim()){
+                    alert("there is no target url!");
+                    return ;
+                }
+                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+
+                var url = textTargetUrl.split('//');
+                url = url[1].substr(0,url[1].indexOf('/'));
+
+                document_domain = url;
+
+                console.log(textTargetUrl);
+                Document.domain = document_domain;
+
+                var webposPop = window.open("","webposPop","fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
+                //webposPop.focus();
+                webposPop.location.href = textTargetUrl;
+                Document.domain = window.location.hostname;
+            }
+
+            var goUrl = function(goStr){
+                var textUrl = document.getElementById('textUrl').value;
+                var textVal = document.getElementById('textVal').value;
+                var document_domain = "";
+                if (null == textUrl || ""==textUrl.trim()){
+                    alert("there is no target url!");
+                    return ;
+                }
+                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+
+                var url = textTargetUrl.split('//');
+                url = url[1].substr(0,url[1].indexOf('/'));
+
+                document_domain = url;
+
+                console.log(textTargetUrl);
+                location.href = textTargetUrl;
+                Document.domain = document_domain;
+            }
+        </script>
+        <style>
+        .divOuter {
+            float:left;
+            width:100%;
+            margin:5px;
+        }
+        .divText {
+            float:left;
+            width:48%;
+            padding:5px;
+            margin:5px;
+        }
+        
+        textarea{
+            width:90%;
+            height:500px;
+        }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div style="height: 100px;">&nbsp;</div>
+
+        <div class="divOuter" style="background-color: green;">
+            <div class="divText" style="background-color: pink;">
+                URL : <input id="textUrl" size="100" value="" placeholder="http://google.com/webposmain">  
+            </div>
+            <div class="divText" style="background-color: skyblue;">
+                VAL : <input id="textVal" size="100" value="" placeholder="asfsa;dlkj">                
+            </div>
+            <div class="divText" style="width:96%;background-color: yellow;">
+                <input type="button" onClick="funcCallPop();" value="CALL_POP">
+            </div>
+            <div class="divText" style="width:96%;background-color: yellow;">
+                <a href="http://local-smartpick.lotteon.com:7700/webposmain?crspkStrNo=HkT//Pc5+CGETrepgc5erNCFGpOfs91SYlb88ulTmXI=" target="_blank">WEBPOS바로가기</a>
+                <a href="javascript:return false;"  onclick="goUrl();">이동</a>
+            </div>
+        </div>
+
+    </body>
+</html>
+
