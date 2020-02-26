@@ -66,26 +66,19 @@
                     alert("there is no target url!");
                     return ;
                 }
+                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
 
-                var patt = /(http(s)?:\/\/)(([a-zA-Z][-a-zA-Z0-9]*)([.][a-zA-Z][-a-zA-Z0-9]*){0,3}||([0-9]{1,3}([.][0-9]{1,3}){3}))/gi;
-                var pattResult = /[^(http(s)?:\/\/)]\S+(\.[^(\n|\t|\s|\/))]+)+/gi;
-                var sResult = textUrl.replace(patt,"");
-                sResult = textUrl.replace(sResult,"");
+                var url = textTargetUrl.split('//');
+                url = url[1].substr(0,url[1].indexOf('/'));
 
-                sResult = (sResult.match(pattResult));
+                document_domain = url;
 
-                document_domain = sResult;
-
-
-
-            //출처: https://devman.tistory.com/entry/JAVASCRIPT자바스크립트-DOMAIN도메인-정보만-추출-하기 [코딩하는 녀석]
-                var textTargetUrl = "https//:" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
                 console.log(textTargetUrl);
-                document.domain = document_domain;
+                Document.domain = document_domain;
 
-                var webposPop = window.open(textTargetUrl,"webposPop",
-                "fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
-                webposPop.focus();
+                var webposPop = window.open(textTargetUrl,"webposPop","fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
+                //webposPop.focus();
+                Document.domain = window.location.hostname;
             }
 
             var funcCallLink = function(){
@@ -96,17 +89,15 @@
                     alert("there is no target url!");
                     return ;
                 }
+                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
 
-                var patt = /(http(s)?:\/\/)(([a-zA-Z][-a-zA-Z0-9]*)([.][a-zA-Z][-a-zA-Z0-9]*){0,3}||([0-9]{1,3}([.][0-9]{1,3}){3}))/gi;
-                var pattResult = /[^(http(s)?:\/\/)]\S+(\.[^(\n|\t|\s|\/))]+)+/gi;
-                var sResult = textUrl.replace(patt,"");
-                sResult = textUrl.replace(sResult,"");
-                sResult = (sResult.match(pattResult));
-                document_domain = sResult;
+                var url = textTargetUrl.split('//');
+                url = url[1].substr(0,url[1].indexOf('/'));
 
-                var textTargetUrl = "https//:" + textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                document_domain = url;
+
                 console.log(textTargetUrl);
-                document.domain = document_domain;
+                Document.domain = document_domain;
 
                 var webposWindow = window.open("about:blank");
                 webposWindow.locatioin.href = textTargetUrl;
@@ -164,7 +155,6 @@ eeeFff</textarea>
             </div>
             <div class="divText" style="width:96%;background-color: yellow;">
                 <input type="button" onClick="funcCallPop();" value="CALL_POP">
-                <input type="button" onClick="funcCallLink();" value="CALL_LINK">
             </div>
         </div>
 
