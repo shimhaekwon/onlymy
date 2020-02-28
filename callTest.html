@@ -60,19 +60,25 @@
             
 
             var callLotteonEcWebPos = function(){
-                //var textUrl = "http://smartpick.lotteon.com/webposmain";
-                // var textUrl = "http://ldev-smartpick.lotteon.com/webposmain";
-                var textUrl = "http://test-smartpick.lotteon.com/webposmain";
-                // var textUrl = "http://stg-smartpick.lotteon.com/webposmain";
+                // var textUrl = "smartpick.lotteon.com/webposmain";
+                // var textUrl = "ldev-smartpick.lotteon.com/webposmain";
+                // var textUrl = "test-smartpick.lotteon.com/webposmain";
+                // var textUrl = "stg-smartpick.lotteon.com/webposmain";
 
+                var httpFlag = window.location.href.split(":")[0];
+                var textUrl = document.getElementById('textUrl').value;
                 var textKey = document.getElementById('textVal').value;    // 암호화된 인증키.
                 var document_domain = "";
                 if (null == textUrl || ""==textUrl.trim()){
                     alert("there is no target url!");
                     return ;
                 }
-                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textKey);
-
+                if(httpFlag.substring(0,4) != "http" || httpFlag.substring(0,4) != "HTTP"){
+                    httpFlag = "http";
+                }
+                var textTargetUrl = httpFlag + "://" + textUrl + "?crspkStrNo=" + encodeURIComponent(textKey);
+                console.log("textTargetUrl:"+textTargetUrl);
+                
                 if (null != document.getElementById("iframeWebpos") ){
                     document.getElementById("iframeWebpos").src = textTargetUrl;
                 }else{
