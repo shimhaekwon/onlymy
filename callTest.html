@@ -3,21 +3,27 @@
        <script type="text/JavaScript">
 
             var funcCallPop = function(){
+                
+                var httpFlag = window.location.href.split(":")[0];
                 var textUrl = document.getElementById('textUrl').value;
-                var textVal = document.getElementById('textVal').value;
+                var textKey = document.getElementById('textVal').value;    // 암호화된 인증키.
                 var document_domain = "";
                 if (null == textUrl || ""==textUrl.trim()){
                     alert("there is no target url!");
                     return ;
                 }
-                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textVal);
+                if(httpFlag.substring(0,4) != "http" || httpFlag.substring(0,4) != "HTTP"){
+                    httpFlag = "http";
+                }
+                var textTargetUrl = httpFlag + "://" + textUrl + "?crspkStrNo=" + encodeURIComponent(textKey);
+                console.log("textTargetUrl:"+textTargetUrl);
 
                 var url = textTargetUrl.split('//');
                 url = url[1].substr(0,url[1].indexOf('/'));
 
                 document_domain = url;
 
-                console.log(textTargetUrl);
+                console.log("document_domain:"+document_domain);
                 Document.domain = document_domain;
 
                 var webposPop = window.open("","webposPop","fullscreen=no,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=950,height=1020");
@@ -25,41 +31,8 @@
                 webposPop.location.href = textTargetUrl;
                 Document.domain = window.location.hostname;
             }
-
-            var callWebPos = function(goStr){
-                var textUrl = document.getElementById('textUrl').value;
-                var textKey = document.getElementById('textVal').value;
-                var document_domain = "";
-                if (null == textUrl || ""==textUrl.trim()){
-                    alert("there is no target url!");
-                    return ;
-                }
-                var textTargetUrl = textUrl + "?crspkStrNo=" + encodeURIComponent(textKey);
-
-                var pureDomain = textTargetUrl.split('//');
-                pureDomain = pureDomain[1].substr(0,pureDomain[1].indexOf('/'));
-                console.log("document.domain:"+pureDomain);
-                document_domain = pureDomain;
-
-                if (null != document.getElementById("iframeWebpos") ){
-                    document.getElementById("iframeWebpos").src = textTargetUrl;
-                }else{
-                    var iframeWebpos = document.createElement("iframe");
-                    iframeWebpos.setAttribute("id", "iframeWebpos");
-                    iframeWebpos.setAttribute("name", "iframeWebpos");
-                    iframeWebpos.setAttribute("style", "width: 0px; height: 0px; background-color: orange;");
-                    iframeWebpos.setAttribute("src", textTargetUrl);
-                    document.body.appendChild(iframeWebpos);
-                }
-
-                //document.getElementById("iframeWebpos").src = textTargetUrl;
-                Document.domain = window.location.hostname;
-
-            }
-
-            
-
-            var callLotteonEcWebPos = function(){
+          
+            var callLotteonEcWebPosForm = function(){
                 // var textUrl = "smartpick.lotteon.com/webposmain";
                 // var textUrl = "ldev-smartpick.lotteon.com/webposmain";
                 // var textUrl = "test-smartpick.lotteon.com/webposmain";
@@ -79,19 +52,33 @@
                 var textTargetUrl = httpFlag + "://" + textUrl + "?crspkStrNo=" + encodeURIComponent(textKey);
                 console.log("textTargetUrl:"+textTargetUrl);
                 
-                if (null != document.getElementById("iframeWebpos") ){
-                    document.getElementById("iframeWebpos").src = textTargetUrl;
+                var url = textTargetUrl.split('//');
+                url = url[1].substr(0,url[1].indexOf('/'));
+
+                console.log("url:"+url);
+                document_domain = url;
+
+                Document.domain = document_domain;
+                if (null != document.getElementById("frmWebPos") ){
+                    frmWebPos.setAttribue("action", textTargetUrl);
+                    frmWebPos.submit();
                 }else{
-                    var iframeWebpos = document.createElement("iframe");
-                    iframeWebpos.setAttribute("id", "iframeWebpos");
-                    iframeWebpos.setAttribute("name", "iframeWebpos");
-                    iframeWebpos.setAttribute("style", "width: 0px; height: 0px; background-color: orange;");
-                    iframeWebpos.setAttribute("src", textTargetUrl);
-                    document.body.appendChild(iframeWebpos);
-                }
+                    var frmWebPos = document.createElement("form");
+                    frmWebPos.setAttribute("id", "frmWebPos");
+                    frmWebPos.setAttribute("charset", "UTF-8");
+                    frmWebPos.setAttribute("method", "Post");
+                    frmWebPos.setAttribute("name", "frmWebPos");
+                    frmWebPos.setAttribute("style", "width: 0px; height: 0px; background-color: white;");
+                    frmWebPos.setAttribute("target", "_blank");
+                    frmWebPos.setAttribute("action", textTargetUrl);
+                    document.body.appendChild(frmWebPos);
+                    frmWebPos.submit();
+                }   
+
+                Document.domain = window.location.hostname;
             }
 
-            var callLotteonEcWebPosPop = function(parAuthKey){  // for partner system's call
+            var callLotteonEcWebPosIframe = function(parAuthKey){  // for partner system's call
                 //var textUrl = "http://smartpick.lotteon.com/webposmain";
                 // var textUrl = "http://ldev-smartpick.lotteon.com/webposmain";
                 var textUrl = "http://test-smartpick.lotteon.com/webposmain";
@@ -106,7 +93,7 @@
                     var iframeWebpos = document.createElement("iframe");
                     iframeWebpos.setAttribute("id", "iframeWebpos");
                     iframeWebpos.setAttribute("name", "iframeWebpos");
-                    iframeWebpos.setAttribute("style", "width: 0px; height: 0px; background-color: white;");
+                    iframeWebpos.setAttribute("style", "width: 800px; height: 800px; background-color: white;");
                     iframeWebpos.setAttribute("src", textTargetUrl);
                     document.body.appendChild(iframeWebpos);
                 }    
@@ -150,10 +137,13 @@
                 VAL : <input id="textVal" size="50" value="" placeholder="asfsa;dlkj">                
             </div>
             <div class="divText" style="width:96%;background-color: yellow;">
-                <input type="button" onClick="funcCallPop();" value="CALL_POP">
+                <input type="button" onClick="funcCallPop();" value="CALL_POP-O">
             </div>
             <div class="divText" style="width:96%;background-color: yellow;">
-                <input type="button" onclick="callLotteonEcWebPos();" value="이동[New Tab]"/>
+                <input type="button" onclick="callLotteonEcWebPosForm();" value="FORMPOST"/>
+            </div>
+            <div class="divText" style="width:96%;background-color: yellow;">
+                <input type="button" onclick="callLotteonEcWebPosIframe();" value="IFRAME"/>
             </div>
             <div class="divText" style="width:96%;background-color: yellow;">
                 <!--
@@ -167,3 +157,11 @@
     </body>
 </html>
 
+<!--
+
+http://dev-smartpick.lotteon.com/webpos?crspkStrNo=Rt9kTx8NoIrKdtKPtx99Ws4po%2bQ6nKLB9Bi2Nh9iKwo%3d
+
+
+
+
+-->
