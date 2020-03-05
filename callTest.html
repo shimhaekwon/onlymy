@@ -60,7 +60,7 @@
 
                 Document.domain = document_domain;
                 if (null != document.getElementById("frmWebPos") ){
-                    frmWebPos.setAttribue("action", textTargetUrl);
+                    frmWebPos.setAttribute("action", textTargetUrl);
                     frmWebPos.submit();
                 }else{
                     var frmWebPos = document.createElement("form");
