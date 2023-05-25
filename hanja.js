@@ -10,3 +10,4 @@ const funcGetJsonData = function(fileName){
         });
     return retArr;
 };
+funcGetJsnoData('hana.json');
