@@ -1,3 +1,14 @@
+// 1. 테이블 렌더링 함수 (별도 분리)
+function renderTablePreview(mdTable) {
+    const previewContainer = document.getElementById('previewContainer');
+    const previewArea = document.getElementById('previewArea');
+
+    if (previewContainer && previewArea && typeof marked !== 'undefined') {
+        previewContainer.classList.remove('hidden');
+        previewArea.innerHTML = marked.parse(mdTable);
+    }
+}
+
 document.getElementById('convertBtn').addEventListener('click', () => {
     const input = document.getElementById('inputArea').value.trim();
     if (!input) {
@@ -6,34 +17,29 @@ document.getElementById('convertBtn').addEventListener('click', () => {
     }
 
     const lines = input.split(/\r?\n/);
-    if (lines.length === 0) return;
-
-    const rows = lines.map(line => line.split('\t'));
+    if (lines.length === 0) {return;}
+    const rows = lines.map(line => line.split('\t'));    
+    if (rows.length === 0) {return;}
     
-    if (rows.length === 0) return;
-
-    let mdTable = '';
-    
+    let mdTable = '';    
     // Header
-    mdTable += '| ' + rows[0].join(' | ') + ' |\n';
-    
+    mdTable += '| ' + rows[0].join(' | ') + ' |\n';    
     // Separator
-    mdTable += '| ' + rows[0].map(() => '---').join(' | ') + ' |\n';
-    
+    mdTable += '| ' + rows[0].map(() => '---').join(' | ') + ' |\n';    
     // Data rows
     for (let i = 1; i < rows.length; i++) {
         mdTable += '| ' + rows[i].join(' | ') + ' |\n';
     }
 
     document.getElementById('outputArea').value = mdTable;
+    renderTablePreview(mdTable); // 분리된 함수 호출
+});
 
-    // Show preview
-    const previewContainer = document.getElementById('previewContainer');
-    const previewArea = document.getElementById('previewArea');
-    
-    if (previewContainer && previewArea && typeof marked !== 'undefined') {
-        previewContainer.classList.remove('hidden');
-        previewArea.innerHTML = marked.parse(mdTable);
+// 3. outputArea 입력 감지 (새로 추가)
+document.getElementById('outputArea').addEventListener('input', (e) => {
+    const mdText = e.target.value;
+    if (mdText.trim()) {
+        renderTablePreview(mdText);
     }
 });
 
