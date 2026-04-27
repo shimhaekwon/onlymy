@@ -1,0 +1,82 @@
+/* ──────────────────────────────────────────────
+   PreviewToMd.css
+   makemd 의 style.css 패턴을 그대로 따른 최소 커스텀
+   대부분의 시각적 처리는 Tailwind / DaisyUI 가 담당
+   ────────────────────────────────────────────── */
+
+/* makemd 와 동일 — 두 입출력 영역의 공통 크기/폰트 */
+.textarea-custom {
+    min-height: 400px;
+    font-family: monospace;
+}
+
+/* ── contenteditable 페이스트 영역 ───────────── */
+/* textarea 와 외관을 맞추되, 렌더된 HTML 그대로 보여주기 위해
+   monospace 강제 해제 + 내부 스크롤 허용 */
+.paste-area {
+    overflow: auto;
+    white-space: normal;
+    font-family: inherit;
+    line-height: 1.5;
+    cursor: text;
+}
+/* 빈 상태 placeholder (textarea 의 placeholder 와 시각 통일) */
+.paste-area:empty::before {
+    content: attr(data-placeholder);
+    color: #9ca3af;
+    pointer-events: none;
+}
+/* 붙여넣은 콘텐츠의 기본 인라인 스타일 정리 */
+.paste-area img { max-width: 100%; height: auto; }
+.paste-area pre {
+    background: #f6f8fa;
+    padding: 8px;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+.paste-area code {
+    background: #f6f8fa;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+/* 출력 textarea — 마크다운 원문이라 monospace 유지 */
+#outputArea {
+    font-family: monospace;
+    white-space: pre;
+}
+
+/* ── 미리보기 영역 표 스타일 (makemd 동일) ──── */
+#previewArea table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+#previewArea th,
+#previewArea td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+#previewArea th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+#previewArea tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+#previewArea tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* ── 토스트 (간단 페이드) ────────────────────── */
+.toast.toast-show {
+    animation: toastFade 1.6s ease-in-out forwards;
+}
+@keyframes toastFade {
+    0%   { opacity: 0; transform: translateY(8px); }
+    15%  { opacity: 1; transform: translateY(0); }
+    85%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(8px); }
+}
