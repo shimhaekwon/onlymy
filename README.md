@@ -1,7 +1,7 @@
 # onlyMy
 onlyMy
 ## PreviewToMd : Make md from md Preview(or Html)
-## makemd : Make md from excel 등등 copy..
+## makemd : Make md from excel(테이블 구조)
 ---
 
 ## 인프런 node.js로 웹애플리케이션 만들기 수업
