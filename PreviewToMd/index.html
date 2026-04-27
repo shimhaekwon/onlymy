@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML → Markdown 변환기</title>
+
+    <!-- DaisyUI + Tailwind (makemd 와 동일한 CDN 조합) -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="PreviewToMd.css">
+
+    <!-- 미리보기 렌더 (Markdown → HTML) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Turndown + GFM + 앱 로직 — 단일 파일로 번들 -->
+    <script src="PreviewToMd.js"></script>
+</head>
+<body class="bg-base-200 p-8">
+    <div class="max-w-6xl mx-auto">
+
+        <!-- 헤더 -->
+        <div class="flex items-center mb-8">
+            <button onclick="location.href='../index.html'" class="btn btn-outline btn-sm mr-4">Home</button>
+            <h1 class="text-3xl font-bold">HTML → Markdown 변환기</h1>
+        </div>
+
+        <!-- 2-pane 입력/출력 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold">렌더된 HTML 붙여넣기 (Ctrl+V)</span>
+                </label>
+                <div id="pasteArea"
+                     contenteditable="true"
+                     class="textarea textarea-bordered textarea-custom paste-area w-full"
+                     data-placeholder="여기에 마크다운 미리보기를 복사해서 붙여넣으세요..."></div>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold">Markdown 원문</span>
+                </label>
+                <textarea id="outputArea"
+                          class="textarea textarea-bordered textarea-custom w-full"
+                          placeholder="변환된 Markdown 이 여기에 출력됩니다..."></textarea>
+            </div>
+        </div>
+
+        <!-- 액션 버튼 -->
+        <div class="flex justify-center gap-4 flex-wrap">
+            <button id="convertBtn" class="btn btn-primary btn-lg px-12">Convert</button>
+            <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            <button id="copyBtn" class="btn btn-secondary">Copy to Clipboard</button>
+        </div>
+
+        <!-- 미리보기 카드 (출력 Markdown 재렌더 → round-trip 검증) -->
+        <div id="previewContainer" class="mt-8 card bg-base-100 shadow-xl hidden">
+            <div class="card-body">
+                <h2 class="card-title">Preview (출력 Markdown 재렌더)</h2>
+                <div id="previewArea" class="prose max-w-none border p-4 rounded bg-white overflow-x-auto"></div>
+            </div>
+        </div>
+
+        <!-- 토스트 영역 (DaisyUI alert) -->
+        <div id="toast" class="toast toast-end hidden">
+            <div id="toastBody" class="alert alert-info">
+                <span id="toastMsg"></span>
+            </div>
+        </div>
+
+        <!-- 사용 방법 -->
+        <div class="mt-8 card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">사용 방법</h2>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li>Markdown 미리보기(렌더된 화면)를 드래그해서 복사합니다.</li>
+                    <li>왼쪽 영역에 Ctrl+V 로 붙여넣으면 자동으로 Markdown 으로 변환됩니다.</li>
+                    <li>오른쪽 textarea 에서 결과를 확인하고 <strong>Copy to Clipboard</strong> 로 복사합니다.</li>
+                    <li>아래 Preview 카드에서 round-trip 결과를 확인할 수 있습니다.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
